@@ -59,6 +59,28 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer updateEmail(String currentEmail,String newEmail){
+        Customer customer=customerRepository.findByEmail(currentEmail);
+        if(customer==null){
+            return null;
+        }
+        customer.setEmail(newEmail);
+        return customerRepository.save(customer);
+    }
+
+    public Customer updatePassword(String email,String currentPassword,String newPassword){
+        Customer customer=customerRepository.findByEmail(email);
+        if(customer==null){
+            return null;
+        }
+        if(!customer.getPassword().equals(currentPassword)){
+            return null;
+        }
+        customer.setPassword(newPassword);
+        return customerRepository.save(customer);
+    }
+
+    @Override
     public Customer getCustomer(Long id) {
         return  customerRepository.findById(id).orElse(null);
     }

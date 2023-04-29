@@ -16,7 +16,7 @@ public class Enterprise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
     private byte[] image;
