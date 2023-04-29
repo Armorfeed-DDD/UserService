@@ -1,9 +1,7 @@
-package com.amorfeed.api.userservice.entities;
-
-
+package com.amorfeed.api.userservice.entity;
 import lombok.*;
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -11,12 +9,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Enterprise")
-public class Enterprise {
+@Table(name = "Customers")
 
+public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
     private byte[] image;
@@ -26,5 +24,7 @@ public class Enterprise {
     @Column(unique = true)
     private String email;
     private String password;
-    private int score;
+    private String subscription;
+
+
 }

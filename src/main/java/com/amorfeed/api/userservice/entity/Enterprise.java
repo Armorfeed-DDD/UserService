@@ -1,9 +1,9 @@
-package com.amorfeed.api.userservice.entities;
+package com.amorfeed.api.userservice.entity;
+
+
 import lombok.*;
+
 import javax.persistence.*;
-import java.awt.*;
-import java.sql.Blob;
-import java.util.Base64;
 
 @Getter
 @Setter
@@ -11,9 +11,9 @@ import java.util.Base64;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Customer")
+@Table(name = "Enterprise")
+public class Enterprise {
 
-public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -26,7 +26,5 @@ public class Customer {
     @Column(unique = true)
     private String email;
     private String password;
-    private String subscription;
-
-
+    private int score;
 }
