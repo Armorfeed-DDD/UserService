@@ -26,4 +26,5 @@ public class Enterprise {
     @Column(unique = true)
     private String email;
     private String password;
+    private int score;
 }
