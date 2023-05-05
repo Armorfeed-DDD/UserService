@@ -26,13 +26,13 @@ import java.util.Optional;
 public class EnterpriseController {
     private final EnterpriseRepository enterpriseRepository;
 
-    private final EnterpriseMapper enterpriseMapper;
+   //private final EnterpriseMapper enterpriseMapper;
 
     private final EnterpriseService enterpriseService;
 
-    public EnterpriseController(EnterpriseRepository enterpriseRepository, EnterpriseMapper enterpriseMapper, EnterpriseService enterpriseService) {
+    public EnterpriseController(EnterpriseRepository enterpriseRepository, EnterpriseService enterpriseService) {
         this.enterpriseRepository = enterpriseRepository;
-        this.enterpriseMapper = enterpriseMapper;
+        //this.enterpriseMapper = enterpriseMapper;
         this.enterpriseService = enterpriseService;
     }
 

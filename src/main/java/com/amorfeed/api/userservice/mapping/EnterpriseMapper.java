@@ -14,7 +14,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class EnterpriseMapper implements Serializable {
-    @Autowired
+
+    //@Autowired
     EnhancedModelMapper mapper;
 
     public Page<EnterpriseResource> modelListPage(List<Enterprise> modelList, Pageable pageable) {
