@@ -6,13 +6,21 @@ import com.amorfeed.api.userservice.entity.User;
 import com.amorfeed.api.userservice.repository.UserRepository;
 import com.amorfeed.api.userservice.resource.RegisterResource;
 import com.amorfeed.api.userservice.resource.UserResource;
+import com.amorfeed.api.userservice.shared.exception.ResourceNotFoundException;
+import com.amorfeed.api.userservice.shared.exception.ResourceValidationException;
 import com.amorfeed.api.userservice.shared.mapping.EnhancedModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.lang.module.ResolutionException;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 
 @Service
 public class UserImpl implements UserService {
@@ -23,6 +31,13 @@ public class UserImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private EnhancedModelMapper mapper;
+
+    private final Validator validator;
+    private static final String ENTITY = "User";
+
+    public UserImpl(Validator validator) {
+        this.validator = validator;
+    }
 
     @Override
     public ResponseEntity<?> register(RegisterResource request) {
@@ -39,6 +54,24 @@ public class UserImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User update(Long id, User request) {
+        Set<ConstraintViolation<User>> violations = validator.validate(request);
+        if (!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        User userWithName = userRepository.findByName(request.getName());
+        if (userWithName != null && !userWithName.getId().equals(id))
+            throw new ResourceValidationException(ENTITY,
+                    "An user with the same name already exists");
+        return userRepository.findById(id).map(user ->
+                userRepository.save(user.withName(request.getName()))
+                        .withEmail(request.getEmail())
+                        .withPassword(request.getPassword()))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id)) ;
+
     }
 
 }

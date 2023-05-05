@@ -6,17 +6,17 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @With
+@AllArgsConstructor
 @Table(name = "user")
 public class User extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(nullable=false)
 
     private String name;
