@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.lang.module.ResolutionException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 
@@ -73,5 +71,8 @@ public class UserImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id)) ;
 
     }
+
+    @Override
+    public boolean existsById(Long id) { return userRepository.existsById(id); }
 
 }

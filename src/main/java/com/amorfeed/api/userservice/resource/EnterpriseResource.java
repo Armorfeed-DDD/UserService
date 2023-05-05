@@ -9,10 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResource {
+public class EnterpriseResource {
 
-    private Long id;
-    private String name;
-    private String email;
-    private String password;
+    private int id;
+    private byte[] image;
+    private String ruc;
+    private String phone;
+    private String description;
 }

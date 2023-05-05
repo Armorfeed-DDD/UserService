@@ -13,4 +13,7 @@ public interface UserService {
     List<User> getAll();
 
     User update(Long userID, User request);
+
+    boolean existsById(Long id);
+
 }
