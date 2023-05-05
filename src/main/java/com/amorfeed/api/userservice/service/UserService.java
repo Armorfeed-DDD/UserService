@@ -10,4 +10,5 @@ public interface UserService {
     ResponseEntity<?> register(RegisterResource request);
 
     List<User> getAll();
+
 }

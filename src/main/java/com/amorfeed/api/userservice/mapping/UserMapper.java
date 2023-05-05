@@ -1,5 +1,7 @@
 package com.amorfeed.api.userservice.mapping;
 
+import com.amorfeed.api.userservice.resource.RegisterResource;
+import com.amorfeed.api.userservice.resource.UpdateResource;
 import com.amorfeed.api.userservice.shared.mapping.EnhancedModelMapper;
 import com.amorfeed.api.userservice.entity.User;
 import com.amorfeed.api.userservice.resource.UserResource;
@@ -20,5 +22,14 @@ public class UserMapper implements Serializable {
     public UserResource toResource(User model){
         return mapper.map(model, UserResource.class);
     }
+
+    public User toModel(RegisterResource resource) {
+        return mapper.map(resource, User.class);
+    }
+
+    public User toModel(UpdateResource resource) {
+        return mapper.map(resource, User.class);
+    }
+
 
 }
