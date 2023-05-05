@@ -5,26 +5,21 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateResource {
     private Long id;
 
-    @NotNull
-    @NotBlank
-    @Size(max=60)
     private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(max=60)
     private String email;
 
-    @NotNull
-    @NotBlank
-    @Size(max=60)
     private String password;
 }

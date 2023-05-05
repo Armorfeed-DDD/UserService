@@ -12,8 +12,8 @@ import java.util.List;
 @EnableJpaRepositories
 @Repository
 public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
-    @Query(value = "SELECT et from enterprises et where et.RUC like '%:RUC%'")
-    Enterprise findByRUC(@Param("RUC") String RUC);
-    @Query(value = "SELECT * from enterprises et where et.Score like '%:Score'")
-    List<Enterprise> findByScore(@Param("Score") int Score);
+    @Query(value = "SELECT et from Enterprise et where et.ruc like '%:ruc%'")
+    Enterprise findByRUC(@Param("ruc") String ruc);
+    @Query(value = "SELECT * from Enterprise et where et.score = :score", nativeQuery = true)
+    List<Enterprise> findByScore(@Param("score") int score);
 }
