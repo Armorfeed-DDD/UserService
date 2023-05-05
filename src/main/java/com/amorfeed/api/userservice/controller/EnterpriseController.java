@@ -42,7 +42,7 @@ public class EnterpriseController {
         return enterpriseService.update(id, request);
     }
 
-    @GetMapping
+    @GetMapping("/{score}")
     public List<Enterprise> getListEnterpriseByScore(@PathVariable("score") int score){
         return enterpriseService.getListbyScore(score);
     }
