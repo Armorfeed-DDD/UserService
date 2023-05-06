@@ -1,5 +1,6 @@
 package com.amorfeed.api.userservice.service.impl;
 
+import com.amorfeed.api.userservice.resource.UpdateResource;
 import com.amorfeed.api.userservice.service.UserService;
 import com.amorfeed.api.userservice.comunication.RegisterResponse;
 import com.amorfeed.api.userservice.entity.User;
@@ -60,16 +61,12 @@ public class UserImpl implements UserService {
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        User userWithName = userRepository.findByName(request.getName());
-        if (userWithName != null && !userWithName.getId().equals(id))
-            throw new ResourceValidationException(ENTITY,
-                    "An user with the same name already exists");
-        return userRepository.findById(id).map(user ->
-                userRepository.save(user.withName(request.getName()))
-                        .withEmail(request.getEmail())
-                        .withPassword(request.getPassword()))
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id)) ;
-
+        return userRepository.findById(id).map(existingUser ->
+                userRepository.save(
+                        existingUser.withName(request.getName())
+                                .withEmail(request.getEmail())
+                                .withPassword(passwordEncoder.encode(request.getPassword()))
+                )).orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
 
     @Override

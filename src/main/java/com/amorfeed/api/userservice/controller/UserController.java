@@ -51,9 +51,10 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public User updateUser(@PathVariable("id") Long id,
-            @RequestBody User request){
-        return userService.update(id, request);
+    public UserResource updateUser(@PathVariable Long id,
+            @RequestBody UpdateResource request){
+        //User user = new User().withId(id).withName(request.getName()).withEmail(request.getEmail()).withPassword(request.getPassword());
+        return userMapper.toResource(userService.update(id, userMapper.toModel(request)));//userService.update(id, request);
     }
 
 }
