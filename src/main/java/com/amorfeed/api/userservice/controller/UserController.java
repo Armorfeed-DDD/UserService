@@ -1,26 +1,26 @@
 package com.amorfeed.api.userservice.controller;
 
 
+import com.amorfeed.api.userservice.comunication.AuthenticateRequest;
+import com.amorfeed.api.userservice.comunication.RegisterRequest;
 import com.amorfeed.api.userservice.mapping.UserMapper;
-import com.amorfeed.api.userservice.resource.RegisterResource;
 import com.amorfeed.api.userservice.resource.UserResource;
 import com.amorfeed.api.userservice.service.UserService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
+
+@SecurityRequirement(name = "armorddd")
 @Tag(name="Users", description = "Create, read, update and delete users")
-@OpenAPIDefinition(info = @Info(title = "armorddd API", version = "2.0", description = "users Information"))
-@SecurityScheme(name = "javainuseapi", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -33,13 +33,27 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/sign-up")
-    public ResponseEntity<?> registerUser( @RequestBody RegisterResource request){
+    @PostMapping("/auth/sign-in")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticateRequest request){
+        return userService.authenticate(request);
+    }
+
+    @PostMapping("/auth/sign-up")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest request){
         return userService.register(request);
     }
     @GetMapping
-    public Page<UserResource> getAllUsers(Pageable pageable) {
-        return userMapper.modelListPage(userService.getAll(), pageable);
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER') or hasRole('ENTERPRISE')")
+    public ResponseEntity<?> getAllUsers(Pageable pageable){
+        Page<UserResource> resources=userMapper.modelListPage(userService.getAll(), pageable);
+        return ResponseEntity.ok(resources);
     }
+
+    @GetMapping("{userId}")
+    public UserResource getUserById(@PathVariable Long userId){
+        return userMapper.  toResource(userService.getById(userId));
+    }
+
+
 
 }
