@@ -10,4 +10,8 @@ public interface UserService {
     ResponseEntity<?> register(RegisterResource request);
 
     List<User> getAll();
+
+    User enableUser(String email);
+
+    String confirmToken(String token);
 }
