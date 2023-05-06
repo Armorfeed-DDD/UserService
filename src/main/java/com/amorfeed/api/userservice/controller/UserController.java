@@ -2,6 +2,8 @@ package com.amorfeed.api.userservice.controller;
 
 
 import com.amorfeed.api.userservice.mapping.UserMapper;
+import com.amorfeed.api.userservice.resource.ChangeEmailResource;
+import com.amorfeed.api.userservice.resource.ChangePasswordResource;
 import com.amorfeed.api.userservice.resource.RegisterResource;
 import com.amorfeed.api.userservice.resource.UserResource;
 import com.amorfeed.api.userservice.service.ConfirmationTokenService;
@@ -48,4 +50,13 @@ public class UserController {
         return this.userService.confirmToken(token);
     }
 
+    @PutMapping("/change-email")
+    public ResponseEntity<?> changeEmail(@RequestBody ChangeEmailResource request){
+        return userService.changeEmail(request);
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordResource request){
+        return userService.changePassword(request);
+    }
 }
