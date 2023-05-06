@@ -105,9 +105,9 @@ public class UserImpl implements UserService {
     }
 
     public ResponseEntity<?> authenticate(AuthenticateRequest request){
-        Optional<User> userFoundByName = this.userRepository.findByName(request.getUsername());
+        Optional<User> userFoundByName = this.userRepository.findByEmail(request.getUsername());
         if(userFoundByName.isEmpty()) {
-            return ResponseEntity.badRequest().body("User not found while trying to find by username");
+            return ResponseEntity.badRequest().body("User not found while trying to find by email");
         }
         if(userFoundByName.get().getEnabled() == false) {
             return ResponseEntity.badRequest().body("User is not enabled yet");
@@ -125,6 +125,7 @@ public class UserImpl implements UserService {
             AuthenticateResource resource=mapper.map(userDetails, AuthenticateResource.class);
             resource.setToken(token);
             resource.setRoles(roles);
+            resource.setName(userDetails.getUsername());
             AuthenticateResponse response=new AuthenticateResponse(resource);
             return ResponseEntity.ok(response.getResource());
         } catch (Exception e){
