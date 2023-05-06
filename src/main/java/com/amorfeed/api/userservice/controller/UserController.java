@@ -37,6 +37,10 @@ public class UserController {
     public ResponseEntity<?> registerUser( @RequestBody RegisterResource request){
         return userService.register(request);
     }
+    @PostMapping("/login")
+    public ResponseEntity<?> LoginUser( @RequestBody RegisterResource request){
+        return userService.register(request);
+    }
     @GetMapping
     public Page<UserResource> getAllUsers(Pageable pageable) {
         return userMapper.modelListPage(userService.getAll(), pageable);

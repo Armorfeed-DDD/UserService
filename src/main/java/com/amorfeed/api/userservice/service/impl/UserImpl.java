@@ -1,5 +1,6 @@
 package com.amorfeed.api.userservice.service.impl;
 
+import com.amorfeed.api.userservice.resource.LoginResource;
 import com.amorfeed.api.userservice.service.UserService;
 import com.amorfeed.api.userservice.comunication.RegisterResponse;
 import com.amorfeed.api.userservice.entity.User;
@@ -36,6 +37,15 @@ public class UserImpl implements UserService {
         return ResponseEntity.ok(response.getResource());
     }
 
+    public ResponseEntity<?> login(LoginResource request) {
+        User user=new User()
+                .withEmail(request.getEmail())
+                .withPassword(passwordEncoder.encode(request.getPassword()));
+        //userRepository.save(user);
+        UserResource resource= mapper.map(user, UserResource.class);
+        RegisterResponse response= new RegisterResponse(resource);
+        return ResponseEntity.ok(response.getResource());
+    }
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
