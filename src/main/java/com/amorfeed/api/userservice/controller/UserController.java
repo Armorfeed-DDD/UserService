@@ -6,6 +6,7 @@ import com.amorfeed.api.userservice.resource.ChangeEmailResource;
 import com.amorfeed.api.userservice.resource.ChangePasswordResource;
 import com.amorfeed.api.userservice.resource.RegisterResource;
 import com.amorfeed.api.userservice.resource.UserResource;
+import com.amorfeed.api.userservice.service.ConfirmationTokenService;
 import com.amorfeed.api.userservice.service.UserService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -42,6 +43,11 @@ public class UserController {
     @GetMapping
     public Page<UserResource> getAllUsers(Pageable pageable) {
         return userMapper.modelListPage(userService.getAll(), pageable);
+    }
+
+    @GetMapping("/confirm")
+    public String confirmAccount(@RequestParam("token") String token) {
+        return this.userService.confirmToken(token);
     }
 
     @PutMapping("/change-email")

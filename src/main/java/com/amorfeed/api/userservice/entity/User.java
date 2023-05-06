@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @With
-@Table(name = "user")
+@Table(name = "users")
 public class User extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,13 @@ public class User extends AuditModel {
     @Column(nullable=false, unique=true)
     private String password;
 
+    @Column(nullable = false)
+    private Boolean enabled;
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.enabled = false;
     }
 }

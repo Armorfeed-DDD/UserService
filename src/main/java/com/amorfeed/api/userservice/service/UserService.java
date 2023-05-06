@@ -13,4 +13,8 @@ public interface UserService {
     ResponseEntity<?> changeEmail(ChangeEmailResource request);
     ResponseEntity<?> changePassword(ChangePasswordResource request);
     List<User> getAll();
+
+    User enableUser(String email);
+
+    String confirmToken(String token);
 }
