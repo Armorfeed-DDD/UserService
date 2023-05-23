@@ -4,6 +4,7 @@ import com.amorfeed.api.userservice.service.ConfirmationTokenService;
 import com.amorfeed.api.userservice.service.UserService;
 import com.amorfeed.api.userservice.comunication.RegisterResponse;
 import com.amorfeed.api.userservice.entity.ConfirmationToken;
+import com.amorfeed.api.userservice.comunication.AuthTokenResponse;
 import com.amorfeed.api.userservice.comunication.AuthenticateRequest;
 import com.amorfeed.api.userservice.comunication.AuthenticateResponse;
 import com.amorfeed.api.userservice.comunication.RegisterRequest;
@@ -236,5 +237,13 @@ public class UserImpl implements UserService {
         User user= userRepository.findByEmail(username)
                 .orElseThrow(()->new UsernameNotFoundException(String.format("User not found with username: %s", username)));
         return UserDetailsImpl.build(user);
+    }
+
+    @Override
+    public AuthTokenResponse validateToken(String token) {
+        boolean isValidToken = handler.validateToken(token);
+        String message = handler.getValidationMessage();
+        handler.setValidationMessage("");
+        return new AuthTokenResponse(isValidToken, message);
     }
 }

@@ -1,6 +1,7 @@
 package com.amorfeed.api.userservice.controller;
 
 
+import com.amorfeed.api.userservice.comunication.AuthTokenResponse;
 import com.amorfeed.api.userservice.comunication.AuthenticateRequest;
 import com.amorfeed.api.userservice.comunication.RegisterRequest;
 import com.amorfeed.api.userservice.mapping.UserMapper;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,7 +72,8 @@ public class UserController {
     public UserResource getUserById(@PathVariable Long userId){
         return userMapper.  toResource(userService.getById(userId));
     }
-
-
-
+    @GetMapping("/auth/validate-token/{token}")
+    public AuthTokenResponse validateToken(@PathVariable("token") String token) {
+        return userService.validateToken(token);
+    }
 }
