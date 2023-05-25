@@ -1,5 +1,6 @@
 package com.amorfeed.api.userservice.service;
 
+import com.amorfeed.api.userservice.comunication.AuthTokenResponse;
 import com.amorfeed.api.userservice.comunication.AuthenticateRequest;
 import com.amorfeed.api.userservice.comunication.RegisterRequest;
 import com.amorfeed.api.userservice.entity.User;
@@ -16,6 +17,7 @@ public interface UserService extends UserDetailsService {
     ResponseEntity<?> register(RegisterRequest request);
     ResponseEntity<?> changeEmail(ChangeEmailResource request);
     ResponseEntity<?> changePassword(ChangePasswordResource request);
+    AuthTokenResponse validateToken(String token);
 
     User enableUser(String email);
 
