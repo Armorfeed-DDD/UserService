@@ -47,10 +47,12 @@ public class JwtHandler {
     }
 
     public boolean validateToken(String token){
+        logger.info("Se va a validar el token {}", token);
         try{
             Jwts.parser().setSigningKey(secret)
                     .parseClaimsJws(token);
             validationMessage = "Sucessfull authentication";
+            logger.info("El token esta validado");
             return true;
         } catch (SignatureException e){
             validationMessage = "Invalid JSON Web Token Signature";

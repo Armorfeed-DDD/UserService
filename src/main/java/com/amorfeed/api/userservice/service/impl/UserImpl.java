@@ -243,6 +243,7 @@ public class UserImpl implements UserService {
     public AuthTokenResponse validateToken(String token) {
         boolean isValidToken = handler.validateToken(token);
         String message = handler.getValidationMessage();
+        logger.info("El token es valido {} y el mensaje es {}", isValidToken, message);
         handler.setValidationMessage("");
         return new AuthTokenResponse(isValidToken, message);
     }
