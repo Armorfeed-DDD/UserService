@@ -19,6 +19,9 @@ public interface UserService extends UserDetailsService {
     ResponseEntity<?> changePassword(ChangePasswordResource request);
     AuthTokenResponse validateToken(String token);
 
+    boolean validateEnterpriseId(Long enterpriseId);
+    boolean validateCustomerId(Long customerId);
+
     User enableUser(String email);
 
     String confirmToken(String token);

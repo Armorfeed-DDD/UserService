@@ -247,4 +247,34 @@ public class UserImpl implements UserService {
         handler.setValidationMessage("");
         return new AuthTokenResponse(isValidToken, message);
     }
+
+    @Override
+    public boolean validateEnterpriseId(Long enterpriseId) {
+        Optional<Role> role = roleRepository.findByName(Roles.ENTERPRISE);
+        if(role.isEmpty()) {
+            logger.info("Role {} does not exist", Roles.ENTERPRISE.toString());
+            return false;
+        }
+        Optional<User> user = userRepository.findById(enterpriseId);
+        if(user.isEmpty()) {
+            logger.info("Enterprise with id {} was not found", enterpriseId);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean validateCustomerId(Long customerId) {
+        Optional<Role> role = roleRepository.findByName(Roles.CUSTOMER);
+        if(role.isEmpty()) {
+            logger.info("Role {} does not exist", Roles.CUSTOMER.toString());
+            return false;
+        }
+        Optional<User> user = userRepository.findById(customerId);
+        if(user.isEmpty()) {
+            logger.info("Enterprise with id {} was not found", customerId);
+            return false;
+        }
+        return true;
+    }
 }

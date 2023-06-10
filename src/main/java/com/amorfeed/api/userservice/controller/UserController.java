@@ -76,9 +76,12 @@ public class UserController {
     public AuthTokenResponse validateToken(@PathVariable("token") String token) {
         return userService.validateToken(token);
     }
-    @GetMapping("/auth/validate-enteprise/{entepriseId}")
-    public boolean validateEnterpise(@PathVariable("entepriseId") Long enterpriseId) {
-
-        return true;
+    @GetMapping("/auth/validate-enterprise/{enterpriseId}")
+    public boolean validateEnterpriseId(@PathVariable("enterpriseId") Long enterpriseId) {
+        return userService.validateEnterpriseId(enterpriseId);
+    }
+    @GetMapping("/auth/validate-customer/{customerId}")
+    public boolean validateCustomerId(@PathVariable("customerId") Long customerId) {
+        return userService.validateCustomerId(customerId);
     }
 }

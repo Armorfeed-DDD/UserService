@@ -1,6 +1,4 @@
 package com.amorfeed.api.userservice.entity;
-
-
 import com.amorfeed.api.userservice.shared.model.AuditModel;
 import lombok.*;
 
