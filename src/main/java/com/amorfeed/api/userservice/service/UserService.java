@@ -6,7 +6,6 @@ import com.amorfeed.api.userservice.comunication.RegisterRequest;
 import com.amorfeed.api.userservice.entity.User;
 import com.amorfeed.api.userservice.resource.ChangeEmailResource;
 import com.amorfeed.api.userservice.resource.ChangePasswordResource;
-import com.amorfeed.api.userservice.resource.AuthenticateResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

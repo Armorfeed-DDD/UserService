@@ -8,7 +8,6 @@ import com.amorfeed.api.userservice.comunication.AuthTokenResponse;
 import com.amorfeed.api.userservice.comunication.AuthenticateRequest;
 import com.amorfeed.api.userservice.comunication.AuthenticateResponse;
 import com.amorfeed.api.userservice.comunication.RegisterRequest;
-import com.amorfeed.api.userservice.comunication.RegisterResponse;
 import com.amorfeed.api.userservice.config.JwtHandler;
 import com.amorfeed.api.userservice.config.UserDetailsImpl;
 import com.amorfeed.api.userservice.entity.Enum.Roles;
@@ -21,13 +20,11 @@ import com.amorfeed.api.userservice.resource.ChangePasswordResource;
 import com.amorfeed.api.userservice.resource.SavedUserResource;
 import com.amorfeed.api.userservice.resource.AuthenticateResource;
 import com.amorfeed.api.userservice.resource.UserResource;
-import com.amorfeed.api.userservice.service.UserService;
 import com.amorfeed.api.userservice.shared.mapping.EnhancedModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,7 +43,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -250,14 +246,9 @@ public class UserImpl implements UserService {
 
     @Override
     public boolean validateEnterpriseId(Long enterpriseId) {
-        Optional<Role> role = roleRepository.findByName(Roles.ENTERPRISE);
-        if(role.isEmpty()) {
-            logger.info("Role {} does not exist", Roles.ENTERPRISE.toString());
-            return false;
-        }
-        Optional<User> user = userRepository.findById(enterpriseId);
+        Optional<User> user = userRepository.findUserIdByIdAndRole(enterpriseId, Roles.ENTERPRISE);
         if(user.isEmpty()) {
-            logger.info("Enterprise with id {} was not found", enterpriseId);
+            logger.info("Enterprise with id {} and role {} was not found", enterpriseId, Roles.ENTERPRISE.toString());
             return false;
         }
         return true;
@@ -265,14 +256,9 @@ public class UserImpl implements UserService {
 
     @Override
     public boolean validateCustomerId(Long customerId) {
-        Optional<Role> role = roleRepository.findByName(Roles.CUSTOMER);
-        if(role.isEmpty()) {
-            logger.info("Role {} does not exist", Roles.CUSTOMER.toString());
-            return false;
-        }
-        Optional<User> user = userRepository.findById(customerId);
+        Optional<User> user = userRepository.findUserIdByIdAndRole(customerId, Roles.CUSTOMER);
         if(user.isEmpty()) {
-            logger.info("Enterprise with id {} was not found", customerId);
+            logger.info("Enterprise with id {} and role {} was not found", customerId, Roles.CUSTOMER.toString());
             return false;
         }
         return true;
