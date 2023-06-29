@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SecurityRequirement(name = "armorddd")
 @Tag(name = "Roles", description = "Create, read, update and delete roles")
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/roles")
 public class RolesController {

@@ -22,7 +22,6 @@ import javax.validation.Valid;
 
 @SecurityRequirement(name = "armorddd")
 @Tag(name="Users", description = "Create, read, update and delete users")
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
